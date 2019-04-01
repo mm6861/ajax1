@@ -6,24 +6,21 @@
 </head>
 <body>
 <script>
-	function goAjax(){
-		var xhr = new XMLHttpRequest();
+function goAjax(){
+	var xhr = new XMLHttpRequest();
 		
-		xhr.open('GET','/ajax',false); 
-		//alert(xhr.readyState);
+	xhr.open('GET','/ajax',false); 
 
-		xhr.onreadystatechange = function(){
+	xhr.onreadystatechange = function(){
 			
-			if(xhr.readyState==4&&xhr.status==200){
-				//console.log(xhr.response);
-				alert(xhr.response);
-				document.
-			}
-		} 
-		xhr.send(); 
-		alert(1); 
+		if(xhr.readyState==4&&xhr.status==200){
+			alert(xhr.response);				
+		}
+	} 
+	xhr.send(); 
+	alert(1); 
 	
-	}
+}
 	
 </script>
 <form method="get" action="/ajax">
