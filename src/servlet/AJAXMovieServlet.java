@@ -1,35 +1,39 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.io.PrintWriter;
 import java.util.Map;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
+
 import service.MovieService;
 import service.impl.MovieServletImpl;
 import utils.Command;
 
 
-public class MovieServlet extends HttpServlet {
+public class AJAXMovieServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MovieService ms = new MovieServletImpl();
+	private Gson gson = new Gson();
   
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String cmd = Command.getCmd(request);
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
 		if("list".equals(cmd)) {
-			request.setAttribute("list", ms.movieList());
-			Command.goPage(request, response,"/views/movie/list");
+			PrintWriter pw = response.getWriter(); //응답객체에 쓴다.
+			pw.println(gson.toJson(ms.movieList()));
 		}else {
 			try {
 				int miNum = Integer.parseInt(cmd);
-				request.setAttribute("movie", ms.selectMovieByMiNum(miNum));
-				Command.goPage(request, response,"/views/movie/view");
+				PrintWriter pw = response.getWriter(); 
+				pw.println(gson.toJson(ms.selectMovieByMiNum(miNum)));
 			}catch(Exception e) {
 				throw new ServletException("올바른 상세조회 값이 아닙니다");
 			}

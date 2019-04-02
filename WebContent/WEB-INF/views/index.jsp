@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html>
@@ -10,6 +9,8 @@
 </head>
 <body>
 <a href="/movie/list">영화개봉리스트</a>
+<a href="/views/movie/ajax_list">Ajax리스트바로가기</a>
+<!-- 이건 서블릿을 먼저 가는게 아니라 jsp를 먼저 갈꺼라서 주소 일케  -->
 <c:if test="${sessionScope.user==null}">
 <form method="post" action="/user">
 <table border="1">
@@ -36,7 +37,8 @@
 <input type="hidden" name="cmd" value="logout">
 <button>로그아웃</button>
 </form>
-<a href="/views/list">리스바로가기</a>
+<a href="/views/list">리스트바로가기</a>
+
 </c:if>
 </body>
 </html>

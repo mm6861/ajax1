@@ -20,4 +20,15 @@ public class MovieServletImpl implements MovieService{
 		return mdao.insertMovie(movie);
 	}
 
+	@Override
+	public Map<String, String> selectMovieByMiNum(int miNum) {
+		// TODO Auto-generated method stub
+		return mdao.selectMovieByMiNum(miNum);
+	}
+
+	@Override
+	public int deleteMovie(int miNum) {
+		return mdao.deleteMovie(miNum);
+	}
+
 }
