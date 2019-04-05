@@ -48,6 +48,7 @@
     <jsp-property-group>
       <url-pattern>*.jsp</url-pattern>
       <include-prelude>/WEB-INF/views/common/header.jspf</include-prelude>
+      <trim-directive-whitespaces>true</trim-directive-whitespaces>
     </jsp-property-group>
   </jsp-config>
   <filter>
@@ -62,12 +63,20 @@
     <filter-name>EncodingFilter</filter-name>
     <url-pattern>*</url-pattern>
   </filter-mapping>
-   <servlet>
+  <servlet>
     <servlet-name>FileServlet</servlet-name>
     <servlet-class>servlet.FileServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>FileServlet</servlet-name>
     <url-pattern>/file/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AddrServlet1</servlet-name>
+    <servlet-class>servlet.AddrServlet1</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddrServlet1</servlet-name>
+    <url-pattern>/addr/*</url-pattern>
   </servlet-mapping>
 </web-app>
