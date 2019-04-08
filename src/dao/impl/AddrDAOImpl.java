@@ -18,6 +18,7 @@ public class AddrDAOImpl implements AddrDAO {
 			"where rownum<=?)\r\n" + 
 			"where rown>=?" ;
 	private static String selectAddrCount = "select count(1) from address $where$";
+	private static String selectAddr = "select * from address where 1=1 and ad_num=?";
 	
 	@Override
 	public List<Map<String, String>> selectAddrList(Map<String, String> addr) {
@@ -27,7 +28,6 @@ public class AddrDAOImpl implements AddrDAO {
 			if(adDong!=null) {
 				sql = selectAddrListSql.replace("$where$"," where ad_dong like '%' || ? || '%'");
 			}
-			System.out.println(sql);
 			PreparedStatement ps = DBCon.getCon().prepareStatement(sql);
 			ps.setString(1, addr.get("lNum"));
 			ps.setString(2, addr.get("sNum"));
@@ -76,6 +76,30 @@ public class AddrDAOImpl implements AddrDAO {
 			e.printStackTrace();
 		}
 		return 0;
+	}
+
+	@Override
+	public Map<String, String> selectAddr(Map<String, String> addr) {
+		try {
+			PreparedStatement ps = DBCon.getCon().prepareStatement(selectAddr);
+			ps.setString(1, addr.get("ad_num"));
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				Map<String,String> address = new HashMap<>();
+				address.put("ad_num", rs.getString("ad_num"));
+				address.put("ad_code", rs.getString("ad_code"));
+				address.put("ad_sido", rs.getString("ad_sido"));
+				address.put("ad_gugun", rs.getString("ad_gugun"));
+				address.put("ad_dong", rs.getString("ad_dong"));
+				address.put("ad_lee", rs.getString("ad_lee"));
+				address.put("ad_bunji", rs.getString("ad_bunji"));
+				address.put("ad_ho", rs.getString("ad_ho"));
+				return address;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 }
