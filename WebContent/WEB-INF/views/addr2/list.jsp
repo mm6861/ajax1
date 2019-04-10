@@ -27,6 +27,7 @@
 		<th>리</th>
 		<th>번지</th>
 		<th>호</th>
+		<th>삭제</th>
 	</tr>
 	<tbody id="tBody">
 	</tbody>
@@ -51,6 +52,54 @@
 		}
 		xhr.send();
 	}
+	function deleteAddr(){
+		var inputs = document.querySelectorAll("input[id]");
+		var params = {};
+		for(var i=0;i<inputs.length;i++){
+			var input = inputs[i];
+			params[input.id]=input.value;
+		}
+		xhr.open('POST','/addr2/delete');
+		xhr.setRequestHeader('Content-Type','application/json');
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState===4){
+				if(xhr.status === 200){
+					var res = JSON.parse(xhr.response);
+					alert(res.msg);
+					if(res.update==='true'){
+						//TO-DO 성공했을때의 로직 추가 해야됨.
+					}else{
+						//TO-DO 실패했을때의 로직 추가 해야됨.
+					}
+				}
+			}
+		}
+		xhr.send(JSON.stringify(params));
+	}
+	function updateAddr(){
+		var inputs = document.querySelectorAll("input[id]");
+		var params = {};
+		for(var i=0;i<inputs.length;i++){
+			var input = inputs[i];
+			params[input.id]=input.value;
+		}
+		xhr.open('POST','/addr2/update');
+		xhr.setRequestHeader('Content-Type','application/json');
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState===4){
+				if(xhr.status === 200){
+					var res = JSON.parse(xhr.response);
+					alert(res.msg);
+					if(res.update==='true'){
+						//TO-DO 성공했을때의 로직 추가 해야됨.
+					}else{
+						//TO-DO 실패했을때의 로직 추가 해야됨.
+					}
+				}
+			}
+		}
+		xhr.send(JSON.stringify(params));
+	}
 	var xhr = new XMLHttpRequest();
 	xhr.open('GET','/addr2/list?pageCount=${param.pageCount}&page=${param.page}&ad_dong=${param.ad_dong}');
 	xhr.onreadystatechange = function(){
@@ -69,6 +118,7 @@
 					html += '<td>' + (addr.ad_lee?addr.ad_lee:'') + '</td>';
 					html += '<td>' + addr.ad_bunji + '</td>';
 					html += '<td>' + addr.ad_ho + '</td>';
+					html += '<td><button onclick="deleteAddr()">삭제</button></td>';
 					html += '</tr>';
 				}
 				html +='<tr>';

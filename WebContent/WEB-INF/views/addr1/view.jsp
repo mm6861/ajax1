@@ -13,6 +13,10 @@
 			<td>${addr.ad_num }</td>
 		</tr>
 		<tr>
+			<th>주소코드</th>
+			<td><${addr.ad_num }</td>
+		</tr>
+		<tr>
 			<th>시도</th>
 			<td>${addr.ad_sido }</td>
 		</tr>

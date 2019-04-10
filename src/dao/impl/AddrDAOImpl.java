@@ -19,6 +19,9 @@ public class AddrDAOImpl implements AddrDAO {
 			"where rown>=?" ;
 	private static String selectAddrCount = "select count(1) from address $where$";
 	private static String selectAddr = "select * from address where 1=1 and ad_num=?";
+	private static String updateAddr = "update address set ad_code=?,ad_sido=?,ad_gugun=?,ad_dong=?,ad_lee=?,ad_bunji=?,"
+			+ " ad_ho=? where ad_num=?";
+	private static String deleteAddr = "delete from address where ad_num=?";
 	
 	@Override
 	public List<Map<String, String>> selectAddrList(Map<String, String> addr) {
@@ -101,5 +104,53 @@ public class AddrDAOImpl implements AddrDAO {
 		}
 		return null;
 	}
+
+	@Override
+	public int updateAddr(Map<String, String> addr) {
+		try {
+			PreparedStatement ps = DBCon.getCon().prepareStatement(updateAddr);
+			ps.setString(1, addr.get("adCode"));
+			ps.setString(2, addr.get("adSido"));
+			ps.setString(3, addr.get("adGugun"));
+			ps.setString(4, addr.get("adDong"));
+			ps.setString(5, addr.get("adLee"));
+			ps.setString(6, addr.get("adBunji"));
+			ps.setString(7, addr.get("adHo"));
+			ps.setString(8, addr.get("adNum"));
+			return ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+		DBCon.close();
+	}
+	return 0;
+	}
+	@Override
+	public int deleteAddr(Map<String, String> addr) {
+		try {
+			PreparedStatement ps = DBCon.getCon().prepareStatement(deleteAddr);
+			ps.setString(1, addr.get("adNum"));
+			return ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
+	}
 	
+	public static void main(String[] args) {
+		AddrDAO adao = new AddrDAOImpl();
+		Map<String,String> addr = new HashMap<>();
+		addr.put("adCode","123");
+		addr.put("adSido","kk");
+		addr.put("adGugun","hh");
+		addr.put("adDong","uu");
+		addr.put("adLee","kk");
+		addr.put("adBunji","jj");
+		addr.put("adHo","hh");
+		addr.put("adNum","1");
+		System.out.println(adao.updateAddr(addr));
+	}
+
 }

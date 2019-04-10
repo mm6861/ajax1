@@ -1,10 +1,12 @@
 package utils;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -17,9 +19,9 @@ import com.google.gson.Gson;
 public class Command {
 	private static final String RESULT_PATH = "/views/msg/result";
 	private static final Gson JSON = new Gson();
-	public static String getCmd(HttpServletRequest req) throws ServletException {
-		String uri = req.getRequestURI();
-		String cmd = req.getParameter("cmd");
+	public static String getCmd(HttpServletRequest request) throws ServletException {
+		String uri = request.getRequestURI();
+		String cmd = request.getParameter("cmd");
 		if(cmd!=null) {
 			return cmd;
 		}
@@ -59,5 +61,15 @@ public class Command {
 		PrintWriter pw = response.getWriter();
 		pw.print(JSON.toJson(obj));
 	}
-	
+	public static Map<String,String> fromJSON(HttpServletRequest request) throws IOException{
+		InputStream is = request.getInputStream();
+		InputStreamReader isr = new InputStreamReader(is);	
+		BufferedReader br = new BufferedReader(isr);
+		StringBuffer sb = new StringBuffer();
+		String line = null;
+		while((line=br.readLine())!=null){
+			sb.append(line);
+		}
+		return JSON.fromJson(sb.toString(), Map.class);
+	}
 }
