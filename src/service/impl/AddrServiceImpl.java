@@ -55,6 +55,9 @@ public class AddrServiceImpl implements AddrService {
 		request.setAttribute("lBlock", lBlock);
 		request.setAttribute("fBlock", fBlock);
 		request.setAttribute("totalPageCnt", totalPageCnt);
+		List<String> asList = adao.selectAdSido();
+		request.setAttribute("asList", asList);
+		request.setAttribute("agList", adao.selectAdGugunList(asList.get(0)));
 		return addrList;
 	}
 
@@ -104,6 +107,17 @@ public class AddrServiceImpl implements AddrService {
 			rMap.put("msg", "삭제 성공 하였습니다.");
 		}
 		return rMap;
+	}
+
+	@Override
+	public List<String> selectAdSido() {
+		return adao.selectAdSido();
+	}
+
+	@Override
+	public List<String> selectAdGugunList(String adSido) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

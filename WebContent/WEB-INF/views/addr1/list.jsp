@@ -17,6 +17,12 @@
 		
 	}
 </script>
+<select name="ad_sido">
+<c:forEach items='${asList }' var="sido">
+	<option value="${sido}">${sido }</option>	
+</c:forEach>
+</select>
+${agList }
 <label for="ad_dong">읍면동 : </label><input type="text" name="ad_dong" id="ad_dong" value="${param.ad_dong }">
 <button onclick="search()">검색</button>
 <select name="pageCount" onchange="changePageCount(this)">
